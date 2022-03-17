@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">MvvmWithRoom(Note App)</string>
+    <string name="add_note">Add Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="edited">(Edited)</string>
+    <string name="title">Title*</string>
+    <string name="field_required">This field is required</string>
+    <string name="field_required_alert">Required fields can\'t be blank</string>
+    <string name="description">Description*</string>
+    <string name="image">Image</string>
+    <string name="caution">Caution</string>
+    <string name="confirm_delete">Confirm Delete</string>
+</resources>
