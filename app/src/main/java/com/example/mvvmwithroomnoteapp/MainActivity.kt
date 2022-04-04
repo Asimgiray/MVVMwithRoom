@@ -25,9 +25,9 @@ import java.io.Serializable
 class MainActivity : AppCompatActivity() {
 
     private val binding: ActivityMainBinding by dataBinding(R.layout.activity_main)
-    private lateinit var viewModel: NoteViewModel
-    private lateinit var createActivityLauncher : ActivityResultLauncher<Intent>
-    private lateinit var editActivityLauncher : ActivityResultLauncher<Intent>
+    private var viewModel: NoteViewModel? = null
+    private var createActivityLauncher : ActivityResultLauncher<Intent>? = null
+    private var editActivityLauncher : ActivityResultLauncher<Intent>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,22 +63,21 @@ class MainActivity : AppCompatActivity() {
         val noteClickListener = object : RowClickListener<Serializable> {
             override fun onRowClick(row: Int, item: Serializable) {
                 val note = item as Note
-                editActivityLauncher.launch(AddEditNoteActivity.create(this@MainActivity, Type.EDIT, note))
+                editActivityLauncher?.launch(AddEditNoteActivity.create(this@MainActivity, Type.EDIT, note))
             }
         }
 
-        viewModel.allNotes.observe(this) { list ->
+        viewModel?.allNotes?.observe(this) { list ->
             list?.let {
                 binding.rvNotes.adapter = NoteAdapter(list, deleteListener, noteClickListener)
             }
         }
-
     }
 
     private fun listeners() {
 
         binding.fabAddNote.setOnClickListener {
-            createActivityLauncher.launch(AddEditNoteActivity.create(this@MainActivity, Type.CREATE))
+            createActivityLauncher?.launch(AddEditNoteActivity.create(this@MainActivity, Type.CREATE))
         }
 
     }
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity() {
             .setTitle(R.string.confirm_delete)
             .setMessage("Are you sure you want to delete ${note.noteTitle} note?")
             .setPositiveButton("Yes"){ dialogInterface, _ ->
-                viewModel.deleteNote(note)
+                viewModel?.deleteNote(note)
                 dialogInterface.dismiss()
             }
             .setNegativeButton("No") { dialogInterface, _ ->
